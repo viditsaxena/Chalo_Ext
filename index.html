@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="chaloApp" ng-csp>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chalo | Travel Without Planning</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <!-- Need this file for ng-hide and ng-show to work in CSP in Chrome Extensions -->
+    <link href="css/angular-csp.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Google Libraries -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvkISJD8ay_X92_2BJxoe1k15ICtGFf5o&libraries=places"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/libs/angular.min.js"></script>
+    <script src="js/libs/angular-cookies.js"></script>
+    <script src="js/libs/angular-messages.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.js"></script> -->
+
+    <script src="js/gservice.js"></script>
+    <!-- <script src="js/planCtrl.js"></script> -->
+    <script src="js/app.js"></script>
+
+
+</head>
+
+<body ng-controller="mainController">
+
+  <!-- *********************************************LOGIN CODE**********************************************-->
+
+  <div ng-hide="token" class="container form-section">
+
+    <form class="form-signin " ng-submit="obtainToken()" name="loginForm" novalidate>
+      <h2 class="form-signin-heading">Please log in</h2>
+
+      <div class="form-group" ng-class="{ 'has-error': loginForm.email.$invalid }">
+
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" name="email"
+        class="form-control"
+        ng-model="logInUser.email"
+        placeholder="Email address"
+        required autofocus>
+
+        <div class="help-block" ng-messages="loginForm.email.$error" ng-show="loginForm.email.$touched">
+            <div ng-messages-include="messages.html"></div>
+        </div>
+
+      </div>
+
+
+      <div class="form-group" ng-class="{ 'has-error': loginForm.password.$invalid}">
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword"
+        ng-model="logInUser.password"
+        ng-minlength="5"
+        ng-maxlength="20"
+        name="password"
+        class="form-control"
+        placeholder="Password"
+        required>
+
+        <div class="help-block" ng-messages="loginForm.password.$error" ng-show="!loginForm.password.$pristine">
+          <p ng-message="minlength">Password needs to be at least 5 characters</p>
+          <p ng-message="maxlength">Your password is too long.</p>
+          <p ng-message="required">Your password is required.</p>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <button class="btn btn-primary btn-block login-button" type="submit"ng-disabled="loginForm.$invalid">
+          Log in
+        </button>
+
+      </div>
+
+    </form>
+
+  </div> <!-- /container -->
+
+  <!-- *********************************************LOGIN CODE ENDS**********************************************-->
+
+  <!-- *********************************************SHOW PAGE STARTS HERE**********************************************-->
+
+<div ng-show="token" class="routePages">
+
+  <div class="list-group">
+    <a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)" class="list-group-item" ng-repeat="plan in currentUserPlans">
+      <h4 class="list-group-item-heading">{{ plan.title }}</h4>
+      <!-- <p class="list-group-item-text">{{ plan.userId }}</p> -->
+    </a>
+  </div>
+
+  <div id="plan-page" class="row content">
+      <input id="pac-input" class="controls" type="text"
+            value="{{ selectedText }}" placeholder="Enter a location">
+      <!-- Google Map -->
+      <div id="map-section" class="col-md-12">
+        <div id="map" style="width:300px; height:300px"></div>
+      </div>
+  </div>
+
+</div>
+
+
+
+</body>
+
+</html>

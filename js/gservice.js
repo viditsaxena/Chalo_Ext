@@ -55,7 +55,7 @@ angular.module('gservice', [])
        marker.setVisible(false);
        $rootScope.place = autocomplete.getPlace();
        console.log($rootScope.place);
-       $rootScope.spot = {name:$rootScope.place.name, place_id:$rootScope.place.place_id, geometry:$rootScope.place.geometry}
+       $rootScope.spot = {name:$rootScope.place.name, place_id:$rootScope.place.place_id, geometry:$rootScope.place.geometry, icon:$rootScope.place.icon}
        console.log($rootScope.spot);
        if (!$rootScope.place.geometry) {
          window.alert("Autocomplete's returned place contains no geometry");

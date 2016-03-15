@@ -5,7 +5,9 @@
     "manifest_version": 2,
     "description": "Select any text(location or point of interest) on any website and add it to the your travel plan map on Chalo",
     "icons": {
-      "default_icon": "images/browser_action_19_icon.png"
+          "16": "icon16.png",
+          "48": "icon48.png",
+          "128": "icon128.png"
     },
     "browser_action": {
       "default_title": "Chalo App",

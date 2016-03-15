@@ -18,7 +18,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: "contextMenu Item",
         type: "normal",
-        title: "Show on Map",
+        title: "Send to Chalo",
         contexts: ["selection"],
         documentUrlPatterns: ["<all_urls>"]
     });

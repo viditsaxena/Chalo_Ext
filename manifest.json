@@ -1,7 +1,7 @@
 {
     "update_url": "https://clients2.google.com/service/update2/crx",
     "name": "Chalo App",
-    "version": "0.0.1",
+    "version": "3.0",
     "manifest_version": 2,
     "description": "Select any text(location or point of interest) on any website and add it to the your travel plan map on Chalo",
     "icons": {
@@ -15,6 +15,9 @@
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://maps.googleapis.com; object-src 'self'",
     "default_locale": "en",
+    "externally_connectable": {
+    "matches": ["*://localhost/*", "*://www.chalo.ml/*"]
+    },
     "background": {
         "scripts": [
             "js/events.js"
@@ -27,6 +30,6 @@
       "tabs",
       "contextMenus",
       "cookies",
-      "http://localhost:8080/*"
+      "http://www.chalo.ml/*"
     ]
 }

@@ -10,12 +10,13 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.token;
     $scope.message;
     $scope.logInUser = {};
+    $scope.newPlan = {title:'', userId: ''}
     $scope.currentUserPlans = [];
     $scope.currentPlan = {};
     $rootScope.selectedText = "";
 
     $scope.getCurrentUserPlans = function(){
-      var url = 'http://www.chalo.ml/api/plans/search?userId=' + $scope.logInUser.id;
+      var url = 'http://localhost:8080/api/plans/search?userId=' + $scope.logInUser.id;
       $http({
         url: url,
         method: 'get',
@@ -24,18 +25,27 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
         }
       }).then(function(response){
         $scope.currentUserPlans = response.data;
-        $scope.currentPlan = $scope.currentUserPlans[$scope.currentUserPlans.length - 1];
-        console.log(  $scope.currentUserPlans );
+
+        function findCurrentPlan(plan) {
+            return plan._id === $scope.currentPlan._id;
+        }
+        $scope.currentPlan = $scope.currentUserPlans.find(findCurrentPlan);
       });
     }
+
+
+
     //Two Cases to check if the user is logged in on the website already. If so, get token and logInUserId
-    chrome.cookies.get({url: "http://www.chalo.ml/", name: "token"}, function(token){
+    chrome.cookies.get({url: "http://localhost:8080/", name: "token"}, function(token){
       if (token){
         $scope.token = token.value;
-        chrome.cookies.get({url: "http://www.chalo.ml/", name: "logInUserId"}, function(logInUserId){
+        chrome.cookies.get({url: "http://localhost:8080/", name: "currentPlanId"}, function(currentPlanId){
+          $scope.currentPlan._id = currentPlanId.value
+          console.log($scope.currentPlan._id);
+        });
+        chrome.cookies.get({url: "http://localhost:8080/", name: "logInUserId"}, function(logInUserId){
         $scope.logInUser.id = logInUserId.value;
-        console.log("LoggedIn token", $scope.token);
-        console.log("LoggedIn UserID", $scope.logInUser.id);
+        $scope.newPlan.userId = logInUserId.value;
         $scope.getCurrentUserPlans();
         });
 
@@ -53,15 +63,18 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
       }
     });
 
+    $scope.openChaloTab = function(){
+     chrome.tabs.create({url: "http://localhost:8080/#/show"});
+    }
 
     //If user is not logged in then log in first.
     $scope.obtainToken = function(){
-      $http.post("http://www.chalo.ml/api/users/authentication_token", $scope.logInUser).then(function(response){
+      $http.post("http://localhost:8080/api/users/authentication_token", $scope.logInUser).then(function(response){
         console.log(response);
         $scope.token = response.data.token;
         $scope.logInUser.id = response.data.id;
-        chrome.cookies.set({url: "http://www.chalo.ml/", name: "token", value: $scope.token});
-        chrome.cookies.set({url: "http://www.chalo.ml/", name: "logInUserId", value: $scope.logInUser.id});
+        chrome.cookies.set({url: "http://localhost:8080/", name: "token", value: $scope.token});
+        chrome.cookies.set({url: "http://localhost:8080/", name: "logInUserId", value: $scope.logInUser.id});
         $scope.getCurrentUserPlans();
         angular.element(document).ready(function () {
               gMap.refresh();
@@ -75,14 +88,32 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
       });
     };
 
+    $scope.addNewPlan = function(){
+      $http({
+        url: 'http://localhost:8080/api/plans/',
+        method: 'post',
+        headers:{
+          'x-access-token': $scope.token
+        },
+        data: $scope.newPlan
+      }).then(function(response){
+        //Get the title and id of the added plan and store it in cookies for use later.
+        chrome.cookies.set({url: "http://localhost:8080/", name: "currentPlanId", value: response.data._id});
+        chrome.cookies.set({url: "http://localhost:8080/", name: "currentTitle", value: response.data.title});
 
+        $scope.newPlan.title = '';
+        $scope.currentPlan = response.data
+        $scope.currentUserPlans.push($scope.currentPlan);
+      });
+    };
 
 
     //This is for myPlans or Browse Plans section, when user clicks on a plan.
     $scope.selectOnePlan = function(plan){
 
       $scope.currentPlan = plan;
-      console.log($scope.currentPlan);
+      chrome.cookies.set({url: "http://localhost:8080/", name: "currentPlanId", value: plan._id});
+
 
     }
     //When user clicks on the button in an info window.
@@ -99,7 +130,7 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
           var plan = $scope.currentPlan;
           //get the plan ID so we can send it to the right route.
           var id = $scope.currentPlan._id
-          var url = 'http://www.chalo.ml/api/plans/' + id;
+          var url = 'http://localhost:8080/api/plans/' + id;
 
           $http({
             url: url,

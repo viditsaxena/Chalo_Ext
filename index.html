@@ -22,7 +22,7 @@
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Google Libraries -->
-    <script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvkISJD8ay_X92_2BJxoe1k15ICtGFf5o&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvkISJD8ay_X92_2BJxoe1k15ICtGFf5o&libraries=places"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -100,19 +100,41 @@
   <!-- *********************************************SHOW PAGE STARTS HERE**********************************************-->
 
 <div ng-show="token" class="routePages">
-<!--
-  <div class="list-group">
-    <a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)" class="list-group-item" ng-repeat="plan in currentUserPlans">
-      <h4 class="list-group-item-heading">{{ plan.title }}</h4>
-    </a>
+
+  <!-- Split button -->
+  <!-- <div class="btn-group">
+    <button type="button" class="btn btn-danger">Action</button>
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
   </div> -->
 
 <div class="btn-group plan-select-button">
+  <a href="#" ng-click="$event.preventDefault; openChaloTab()" class="btn btn-danger">{{ currentPlan.title }}</a>
   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    {{ currentPlan.title }} <span class="caret"></span>
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu">
+
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="newPlan.title" placeholder="Add New Plan">
+      <span class="input-group-btn">
+        <button class="btn btn-success" ng-click="addNewPlan()" type="button">Go</button>
+      </span>
+    </div><!-- /input-group -->
     <li ng-repeat="plan in currentUserPlans"><a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)">{{ plan.title }}</a></li>
+
+
+
   </ul>
 </div>
 

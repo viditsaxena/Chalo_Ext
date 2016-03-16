@@ -30,6 +30,7 @@
       "tabs",
       "contextMenus",
       "cookies",
-      "http://www.chalo.ml/*"
+      "http://www.chalo.ml/*",
+      "*://localhost/*"
     ]
 }

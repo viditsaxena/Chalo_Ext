@@ -50,14 +50,14 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
         });
 
 
-        // angular.element(document).ready(function () {
+        angular.element(document).ready(function () {
             gMap.refresh();
             chrome.storage.sync.get('selectedText', function(items) {
               $rootScope.selectedText = items.selectedText;
               chrome.storage.sync.set({'selectedText': ''}, function() {
               });
             });
-          // });
+          });
       } else {
         $scope.message = "You are not logged in. Please log in first."
       }

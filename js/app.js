@@ -1,11 +1,11 @@
 
 
-var chaloApp = angular.module('chaloApp', ['gservice', 'ngCookies']);
+var unwanderApp = angular.module('unwanderApp', ['gservice', 'ngCookies']);
 
 
 
 
-chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookies', '$location', 'gMap', function($scope, $rootScope, $http, $cookies, $location, gMap){
+unwanderApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookies', '$location', 'gMap', function($scope, $rootScope, $http, $cookies, $location, gMap){
 
     $scope.token;
     $scope.message;
@@ -29,7 +29,7 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
         function findCurrentPlan(plan) {
             return plan._id === $scope.currentPlan._id;
         }
-        $scope.currentPlan = $scope.currentUserPlans.find(findCurrentPlan);
+        $scope.currentPlan = $scope.currentUserPlans.find(findCurrentPlan)
       });
     }
 
@@ -63,7 +63,7 @@ chaloApp.controller('mainController', ['$scope', '$rootScope', '$http', '$cookie
       }
     });
 
-    $scope.openChaloTab = function(){
+    $scope.openUnwanderTab = function(){
      chrome.tabs.create({url: "http://localhost:8080/#/show"});
     }
 

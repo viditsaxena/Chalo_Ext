@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="chaloApp" ng-csp>
+<html lang="en" ng-app="unwanderApp" ng-csp>
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Chalo | Travel Without Planning</title>
+    <title>Unwander | Travel Without Planning</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
 
   <!-- *********************************************LOGIN CODE**********************************************-->
 
-  <div ng-hide="token" class="container form-section">
+  <div  ng-hide="token" class="container form-section ng-cloak">
 
     <form class="form-signin " ng-submit="obtainToken()" name="loginForm" novalidate>
       <h2 class="form-signin-heading">Please log in</h2>
@@ -101,36 +101,28 @@
 
 <div ng-show="token" class="routePages">
 
-  <!-- Split button -->
-  <!-- <div class="btn-group">
-    <button type="button" class="btn btn-danger">Action</button>
-    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-    </ul>
-  </div> -->
+
 
 <div class="btn-group plan-select-button">
-  <a href="#" ng-click="$event.preventDefault; openChaloTab()" class="btn btn-danger">{{ currentPlan.title }}</a>
+  <p>
+    Save Spot to :
+  </p>
+  <a href="#" ng-click="$event.preventDefault; openUnwanderTab()" class="btn btn-danger">{{ currentPlan.title || "Select a Plan" }}</a>
   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="caret"></span>
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu">
+    <p ng-hide="currentPlan"><small>You have no plans. Please add one.</small>
 
+    </p>
     <div class="input-group">
-      <input type="text" class="form-control" ng-model="newPlan.title" placeholder="Add New Plan">
+      <input type="text" class="form-control" ng-model="newPlan.title" placeholder="Plan Name">
       <span class="input-group-btn">
-        <button class="btn btn-success" ng-click="addNewPlan()" type="button">Go</button>
+        <button class="btn btn-success" ng-click="addNewPlan()" type="button">Add</button>
       </span>
     </div><!-- /input-group -->
+    <hr>
     <li ng-repeat="plan in currentUserPlans"><a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)">{{ plan.title }}</a></li>
 
 
@@ -144,7 +136,7 @@
     <div class="input-group search-box">
   <!-- <span class="input-group-addon" id="basic-addon1">@</span> -->
     <input id="pac-input" class="form-control controls" type="text"
-       value="{{ selectedText }}" placeholder="Find a location">
+       value="{{ selectedText }}" placeholder="Find a Spot">
     </div>
 
 

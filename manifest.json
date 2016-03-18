@@ -1,22 +1,22 @@
 {
     "update_url": "https://clients2.google.com/service/update2/crx",
-    "name": "Chalo App",
+    "name": "Unwander App",
     "version": "3.0",
     "manifest_version": 2,
-    "description": "Select any text(location or point of interest) on any website and add it to the your travel plan map on Chalo",
+    "description": "Select any text(location or point of interest) on any website and add it to the your travel plan map on Unwander",
     "icons": {
           "16": "icon16.png",
           "48": "icon48.png",
           "128": "icon128.png"
     },
     "browser_action": {
-      "default_title": "Chalo App",
+      "default_title": "Unwander App",
       "default_popup": "index.html"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://maps.googleapis.com; object-src 'self'",
     "default_locale": "en",
     "externally_connectable": {
-    "matches": ["*://localhost/*", "*://www.chalo.ml/*"]
+    "matches": ["*://localhost/*", "*://www.unwander.com/*"]
     },
     "background": {
         "scripts": [
@@ -30,7 +30,7 @@
       "tabs",
       "contextMenus",
       "cookies",
-      "http://www.chalo.ml/*",
+      "http://www.unwander.com/*",
       "*://localhost/*"
     ]
 }

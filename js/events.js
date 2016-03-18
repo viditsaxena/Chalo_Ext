@@ -18,7 +18,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: "contextMenu Item",
         type: "normal",
-        title: "Send to Chalo",
+        title: "Send to Unwander",
         contexts: ["selection"],
         documentUrlPatterns: ["<all_urls>"]
     });

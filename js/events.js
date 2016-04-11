@@ -1,7 +1,6 @@
 console.log("Event Page is loaded");
 
-//One option is get the selectedText and put it into Chrome Storage. Other option is to watch the Tuts video and see how the guy used the functions between scripts.
-
+//What happends when some text is selected on a webpage and right clicked.
 function clickHandler(text) {
 
   // Save it using the Chrome extension storage API.
@@ -13,7 +12,8 @@ function clickHandler(text) {
     console.log(items);
   });
 }
-// Set up context menu at install time.
+
+// Set up context menu right click when Chrome web pages load.
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: "contextMenu Item",
@@ -24,7 +24,7 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 
-
+//function to pass on when the context menu item is clicked.
 function cMenuClick(info) {
     var selectedText = info.selectionText;
     clickHandler(selectedText);
@@ -32,19 +32,19 @@ function cMenuClick(info) {
 
 //Below happens when the context menu is clicked
 chrome.contextMenus.onClicked.addListener(cMenuClick);
-//When someone clicks the browser action then pass nothing/
+//When someone clicks the browser action(Top right icon)then pass nothing/
 chrome.browserAction.onClicked.addListener(function(a) {
     clickHandler("")
 });
 
-chrome.runtime.onMessageExternal.addListener(
-    function(request, sender, sendResponse) {
-        if (request) {
-            if (request.message) {
-                if (request.message == "version") {
-                    sendResponse({version: 1.0});
-                }
-            }
-        }
-        return true;
-    });
+// chrome.runtime.onMessageExternal.addListener(
+//     function(request, sender, sendResponse) {
+//         if (request) {
+//             if (request.message) {
+//                 if (request.message == "version") {
+//                     sendResponse({version: 1.0});
+//                 }
+//             }
+//         }
+//         return true;
+//     });

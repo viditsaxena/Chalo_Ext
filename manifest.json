@@ -3,7 +3,7 @@
     "name": "Unwander App",
     "version": "3.0",
     "manifest_version": 2,
-    "description": "Select any text(location or point of interest) on any website and add it to the your travel plan map on Unwander",
+    "description": "Select any text(location or point of interest) on any website and add it to the your travel plan on Unwander",
     "icons": {
           "16": "icon16.png",
           "48": "icon48.png",
